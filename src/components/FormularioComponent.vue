@@ -29,11 +29,14 @@
         },
         methods: {
             FinisheTask(totalTime: number) : void {
+                const doneDate = new Date()
                 this.$emit('onCreateTask', {
-                    //time: new Date(totalTime * 1000).toISOString().substring(11, 19),
                     time: totalTime,
                     description: this.description,
-                    //data: Date.now()
+                    //data: new Date().toLocaleDateString() //25/03/2023
+                    //data: new Date().toDateString() //Sat Mar 25 2023
+                    //data: new Date().toISOString() //2023-03-26T00:43:17.929Z
+                    data: doneDate.toISOString().substring(11,19) + ' || ' +  doneDate.toLocaleDateString()
                 })
                 this.description = ''
             }

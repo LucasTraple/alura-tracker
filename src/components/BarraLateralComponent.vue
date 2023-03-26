@@ -3,9 +3,25 @@
         <h1>
             <img src="../assets/logo.png" alt="">
         </h1>
-        <button class="button" @click="alterTheme">
-            {{ buttonText }}
-        </button>
+        <div>
+            <button class="button" @click="alterTheme">{{ buttonText }}</button>
+        </div>
+        <nav class="panel mt-5">
+            <ul>
+                <li>
+                    <RouterLink to="/" class="link">
+                        <i class="fas fa-tasks"></i>
+                        tarefas
+                    </RouterLink>
+                </li>
+                <li>
+                    <RouterLink to="/projetos" class="link">
+                        <i class="fas fa-project-diagram"></i>
+                        projetos
+                    </RouterLink>
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
@@ -52,5 +68,18 @@ header {
         padding: 2.5rem;
         height: auto;
     }
+}
+
+.panel li {
+    margin: 8px 0;
+}
+.link {
+    color: #fff;
+}
+.link:hover {
+    color: #FAF0CA;
+}
+.link.router-link-active {
+    color: #FAF0CA;
 }
 </style>

@@ -4,13 +4,7 @@
       <BarraLateralComponent @onAlterTheme="alterTheme"/>
     </div>
     <div class="column is-three-quarters conteudo">
-      <FormularioComponent @onCreateTask="createTask" />
-      <div class="lista">
-        <TaskComponent v-for="(task, index) in tasks" :key="index" :task="task" />
-        <BoxComponent v-if="emptyList">
-          You`ve being procastinating today!
-        </BoxComponent>
-      </div>
+     <router-view></router-view>
     </div>
   </main>
 </template>
@@ -19,34 +13,18 @@
 
 import { defineComponent } from 'vue';
 import BarraLateralComponent from './components/BarraLateralComponent.vue';
-import BoxComponent from './components/BoxComponent.vue';
-import FormularioComponent from './components/FormularioComponent.vue';
-import TaskComponent from './components/TaskComponent.vue';
-import ITask from './Interfaces/ITask';
 
 export default defineComponent({
   name: 'App',
   components: {
-    BarraLateralComponent,
-    FormularioComponent,
-    TaskComponent,
-    BoxComponent
+    BarraLateralComponent
   },
   data() {
     return {
-      tasks: [] as ITask[],
       darkModeOn: false
     }
   },
-  computed: {
-    emptyList(): boolean {
-      return this.tasks.length == 0
-    }
-  },
   methods: {
-    createTask(task: ITask) {
-      this.tasks.push(task)
-    },
     alterTheme(darkModeOn: boolean){
       this.darkModeOn = darkModeOn
     }
