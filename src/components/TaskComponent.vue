@@ -4,8 +4,11 @@ import CronometroComponent from './CronometroComponent.vue';
 <template>
     <BoxComponent>
         <div class="columns">
-            <div class="column is-5">
+            <div class="column is-4">
                {{ task.description || 'Task without description'}}
+            </div>
+            <div class="column is-3">
+                {{ task.projeto?.nome || 'N/D' }}
             </div>
             <div class="column">
                 <CronometroComponent :timeInSeconds="task.time" />
