@@ -33,7 +33,7 @@ export default defineComponent({
     //mixins: [notificacaoMixin],
     mounted() {
         if (this.id) {
-            const projeto = this.store.state.projetos.find(proj => proj.id == this.id)
+            const projeto = this.store.state.projeto.projetos.find(proj => proj.id == this.id)
             this.nomeDoProjeto = projeto?.nome || ''
         }
     },
@@ -48,17 +48,17 @@ export default defineComponent({
                 this.store.dispatch(ALTERAR_PROJETOS, {
                     id: this.id,
                     nome: this.nomeDoProjeto
-                }).then(() =>  this.lidarComSucesso())
+                }).then(() => this.lidarComSucesso())
             }
             else {
                 this.store.dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
-                .then(() =>  this.lidarComSucesso())
+                    .then(() => this.lidarComSucesso())
             }
         },
-        lidarComSucesso(){
+        lidarComSucesso() {
             this.nomeDoProjeto = "";
-                    this.notificar(TipoNotificacao.SUCESSO, 'Novo projeto foi salvo', 'Prontinho ;) seu projeto já está disponível.')
-                    this.$router.push('/projetos')
+            this.notificar(TipoNotificacao.SUCESSO, 'Novo projeto foi salvo', 'Prontinho ;) seu projeto já está disponível.')
+            this.$router.push('/projetos')
         }
     },
     setup() {

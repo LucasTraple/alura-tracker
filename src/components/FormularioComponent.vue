@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="column">
-                <TemporizadorComponent @onTimerFinished="FinisheTask" />
+                <TemporizadorComponent @onTimerFinished="FinishTask" />
             </div>
         </div>
     </div>
@@ -40,12 +40,11 @@ export default defineComponent({
         }
     },
     methods: {
-        FinisheTask(totalTime: number): void {
+        FinishTask(totalTime: number): void {
             const doneDate = new Date()
             this.$emit('onCreateTask', {
                 time: totalTime,
-                description: this.description,
-                
+                description: this.description,                
                 data: doneDate.toISOString().substring(11, 19) + ' || ' + doneDate.toLocaleDateString(),
                 projeto: this.projetos.find(proj => proj.id == this.idProjeto)
             })
@@ -55,7 +54,7 @@ export default defineComponent({
     setup() {
         const store = useStore(key)
         return {
-            projetos: computed(() => store.state.projetos)
+            projetos: computed(() => store.state.projeto.projetos)
         }
     }
 }); 

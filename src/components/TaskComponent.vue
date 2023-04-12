@@ -3,18 +3,18 @@ import CronometroComponent from './CronometroComponent.vue';
 
 <template>
     <BoxComponent>
-        <div class="columns">
+        <div class="columns clicavel" @click="tarefaClicada">
             <div class="column is-4">
-               {{ task.description || 'Task without description'}}
+               {{ tarefa.description || 'Tarefa without description'}}
             </div>
             <div class="column is-3">
-                {{ task.projeto?.nome || 'N/D' }}
+                {{ tarefa.projeto?.nome || 'N/D' }}
             </div>
             <div class="column">
-                <CronometroComponent :timeInSeconds="task.time" />
+                <CronometroComponent :timeInSeconds="tarefa.time" />
             </div>
             <div class="column">
-                {{ task.data }}
+                {{ tarefa.data }}
             </div>
         </div>
     </BoxComponent>
@@ -22,22 +22,34 @@ import CronometroComponent from './CronometroComponent.vue';
 
 <script lang="ts">
 //import ITask from '@/Interfaces/ITask';
-import ITask from '../Interfaces/ITask';
+import ITarefa from '../Interfaces/ITarefa';
 import { defineComponent, PropType } from 'vue';
 import CronometroComponent from './CronometroComponent.vue';
 import BoxComponent from './BoxComponent.vue';
 
 export default defineComponent({
     name: 'TaskComponent',
+    emits: ['aoTarefaClicada'],
     components: {
         CronometroComponent,
         BoxComponent
     },
     props:{
-        task:{
-            type: Object as PropType<ITask>,
+        tarefa:{
+            type: Object as PropType<ITarefa>,
             required: true
+        }
+    },
+    methods: {
+        tarefaClicada():void{
+            this.$emit('aoTarefaClicada', this.tarefa)
         }
     }
 })
 </script>
+
+<style scoped>
+.clicavel{
+    cursor: pointer;
+}
+</style>

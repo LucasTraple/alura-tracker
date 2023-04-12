@@ -9,8 +9,54 @@
       "nome": "Teste Updated"
     },
     {
-      "nome": "Teste 021",
+      "id": 3,
+      "nome": "Testando hoje"
+    },
+    {
+      "id": 4,
+      "nome": "Testeeee"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "time": 2,
+      "description": "Configuração do ambiente",
+      "data": "20:02:23",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      }
+    },
+    {
+      "time": 3,
+      "description": "Testando hoje tarefa",
+      "data": "23:15:39 || 10/04/2023",
+      "projeto": {
+        "id": 3,
+        "nome": "Testando hoje"
+      },
       "id": 4
+    },
+    {
+      "time": 2,
+      "description": "7i8ok78999",
+      "data": "23:30:25 || 10/04/2023",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 7
+    },
+    {
+      "time": 0,
+      "description": "adrthwaerth",
+      "data": "23:31:26 || 10/04/2023",
+      "projeto": {
+        "id": 2,
+        "nome": "Teste Updated"
+      },
+      "id": 8
     }
   ]
 }
