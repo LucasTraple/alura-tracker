@@ -21,7 +21,6 @@ import CronometroComponent from './CronometroComponent.vue';
 </template>
 
 <script lang="ts">
-//import ITask from '@/Interfaces/ITask';
 import ITarefa from '../Interfaces/ITarefa';
 import { defineComponent, PropType } from 'vue';
 import CronometroComponent from './CronometroComponent.vue';

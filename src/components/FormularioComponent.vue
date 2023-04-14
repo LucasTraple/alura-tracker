@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import TemporizadorComponent from './TemporizadorComponent.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store';
@@ -33,28 +33,28 @@ export default defineComponent({
     components: {
         TemporizadorComponent
     },
-    data() {
-        return {
-            description: '',
-            idProjeto: ''
-        }
-    },
-    methods: {
-        FinishTask(totalTime: number): void {
-            const doneDate = new Date()
-            this.$emit('onCreateTask', {
-                time: totalTime,
-                description: this.description,                
-                data: doneDate.toISOString().substring(11, 19) + ' || ' + doneDate.toLocaleDateString(),
-                projeto: this.projetos.find(proj => proj.id == this.idProjeto)
-            })
-            this.description = ''
-        }
-    },
-    setup() {
+    setup(props, { emit }) {
         const store = useStore(key)
+        const description = ref("")
+        const idProjeto = ref("")
+        const projetos = computed(() => store.state.projeto.projetos)
+
+        const FinishTask = (totalTime: number): void  => {
+            const doneDate = new Date()
+            emit('onCreateTask', {
+                time: totalTime,
+                description: description.value,                
+                data: doneDate.toISOString().substring(11, 19) + ' || ' + doneDate.toLocaleDateString(),
+                projeto: projetos.value.find(proj => proj.id == idProjeto.value)
+            })
+            description.value = ''
+        }
+
         return {
-            projetos: computed(() => store.state.projeto.projetos)
+            description,
+            idProjeto,
+            projetos,
+            FinishTask
         }
     }
 }); 
