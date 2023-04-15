@@ -1,11 +1,9 @@
-import { INotificacao } from "@/Interfaces/INotificacao";
 import IProjeto from "@/Interfaces/IProjeto";
 import http from "@/http";
 import { Estado } from "@/store";
 import { OBTER_PROJETOS, CADASTRAR_PROJETOS, ALTERAR_PROJETOS, REMOVER_PROJETOS } from "@/store/tipo-acoes";
-import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, EXCLUIR_PROJETO, NOTIFICAR } from "@/store/tipo-mutacoes";
+import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, EXCLUIR_PROJETO } from "@/store/tipo-mutacoes";
 import { Module } from "vuex";
-
 
 export interface EstadoProjeto {
     projetos: IProjeto[]

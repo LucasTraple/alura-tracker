@@ -4,6 +4,14 @@
     <BoxComponent v-if="emptyList">
       You`ve being procastinating today!
     </BoxComponent>
+    <div class="field">
+      <p class="control has-icons-left">
+        <input class="input" type="email" placeholder="Digite para filtrar" v-model="filtro">
+        <span class="icon is-small is-left">
+          <i class="fa-brands fa-searchengin"></i>
+        </span>
+      </p>
+    </div>
     <TaskComponent v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" @aoTarefaClicada="selecionarTarefa" />
     <div class="modal" :class="{ 'is-active': tarefaSelecionada }" v-if="tarefaSelecionada">
       <div class="modal-background"></div>
@@ -29,8 +37,7 @@
 </template>
   
 <script lang="ts">
-
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
 import BoxComponent from '../components/BoxComponent.vue';
 import FormularioComponent from '../components/FormularioComponent.vue';
 import TaskComponent from '../components/TaskComponent.vue';
@@ -72,11 +79,11 @@ export default defineComponent({
     fecharModal() {
       this.tarefaSelecionada = null
     },
-    alterarTarefa(){
+    alterarTarefa() {
       this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
-      .then(() => this.fecharModal())
+        .then(() => this.fecharModal())
     },
-    deleteTarefa(){
+    deleteTarefa() {
       this.store.dispatch(REMOVER_TAREFA, this.tarefaSelecionada?.id)
         .then(() => this.fecharModal())
     }
@@ -86,10 +93,30 @@ export default defineComponent({
     const { notificar } = useNotificador()
     store.dispatch(OBTER_TAREFAS)
     store.dispatch(OBTER_PROJETOS)
+    
+    const filtro = ref('')
+    
+    // const tarefas = computed(() => store
+    //                                     .state
+    //                                     .tarefa
+    //                                     .tarefas
+    //                                     .filter((t) => !filtro.value || t.description.toLowerCase().includes(filtro.value.toLowerCase())))
+
+    watchEffect(() => {
+      store.dispatch(OBTER_TAREFAS, filtro.value)
+    })
+
+    watch(filtro, (valorAtual, valorAntigo) => {
+      if (valorAtual != valorAntigo) {
+        console.log('Iguais')
+      }
+    })
+
     return {
-      tarefas: computed(() => store.state.tarefas),
+      tarefas: computed(() => store.state.tarefa.tarefas),
       store,
-      notificar
+      notificar,
+      filtro
     }
   }
 });
