@@ -13,32 +13,30 @@
       </p>
     </div>
     <TaskComponent v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" @aoTarefaClicada="selecionarTarefa" />
-    <div class="modal" :class="{ 'is-active': tarefaSelecionada }" v-if="tarefaSelecionada">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head" style="height:20%">
-          <p class="modal-card-title">Editando uma tarefa</p>
-          <button @click="fecharModal" class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="field">
-            <label for="descricaoDaTarefa" class="label">Descrição</label>
-            <input type="text" class="input" v-model="tarefaSelecionada.description" id="descricaoDaTarefa" />
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button @click="alterarTarefa" class="button is-success">Salvar alterações</button>
-          <button @click="fecharModal" class="button">Cancelar</button>
-          <button @click="deleteTarefa" class="button" style="background-color: lightcoral;">Delete</button>
-        </footer>
-      </div>
-    </div>
+    <ModalComponent :mostrar="tarefaSelecionada != null">
+      <template v-slot:cabecalho>
+        <p class="modal-card-title">Editando uma tarefa</p>
+        <button @click="fecharModal" class="delete" aria-label="close"></button>
+      </template>
+      <template v-slot:corpo>
+        <div class="field">
+          <label for="descricaoDaTarefa" class="label">Descrição</label>
+          <input type="text" class="input" v-model="tarefaSelecionada.description" id="descricaoDaTarefa" />
+        </div>
+      </template>
+      <template v-slot:rodape>
+        <button @click="alterarTarefa" class="button is-success">Salvar alterações</button>
+        <button @click="fecharModal" class="button">Cancelar</button>
+        <button @click="deleteTarefa" class="button" style="background-color: lightcoral;">Delete</button>
+      </template>
+    </ModalComponent>
   </div>
 </template>
   
 <script lang="ts">
-import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
+import { computed, defineComponent, ref, watchEffect } from 'vue';
 import BoxComponent from '../components/BoxComponent.vue';
+import ModalComponent from '../components/ModalComponent.vue';
 import FormularioComponent from '../components/FormularioComponent.vue';
 import TaskComponent from '../components/TaskComponent.vue';
 import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS, REMOVER_TAREFA } from '@/store/tipo-acoes';
@@ -52,7 +50,8 @@ export default defineComponent({
   components: {
     FormularioComponent,
     TaskComponent,
-    BoxComponent
+    BoxComponent,
+    ModalComponent
   },
   data() {
     return {
@@ -93,9 +92,9 @@ export default defineComponent({
     const { notificar } = useNotificador()
     store.dispatch(OBTER_TAREFAS)
     store.dispatch(OBTER_PROJETOS)
-    
+
     const filtro = ref('')
-    
+
     // const tarefas = computed(() => store
     //                                     .state
     //                                     .tarefa
@@ -106,11 +105,11 @@ export default defineComponent({
       store.dispatch(OBTER_TAREFAS, filtro.value)
     })
 
-    watch(filtro, (valorAtual, valorAntigo) => {
-      if (valorAtual != valorAntigo) {
-        console.log('Iguais')
-      }
-    })
+    // watch(filtro, (valorAtual, valorAntigo) => {
+    //   if (valorAtual != valorAntigo) {
+    //     console.log('Iguais')
+    //   }
+    // })
 
     return {
       tarefas: computed(() => store.state.tarefa.tarefas),
